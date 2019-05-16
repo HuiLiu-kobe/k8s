@@ -269,3 +269,23 @@ spec:
             timeoutSeconds: 10
 
 ---
+
+Kubectl explain rc.spec.template(metadata.spec) 
+kubectl get pods --show-labels
+
+kubectl label pods pod-demo release=canary  控制器使用复杂条件
+ SVC 负载均衡调度
+
+kubectl patch pod valid-pod -p '{"spec":{"containers":[{"name":"kubernetes-serve-hostname","image":"new image"}]}}'
+kubectl patch deployment myapp-deploy -p '{"spec":{"replicas": 5}}'
+
+
+kubectl rollout pause
+
+kubectl explain deploy
+
+
+kubectl patch deployment myapp-deploy -p '{"spec":{"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}}'
+
+kubectl set image deployment myapp-deploy myapp=s390x/tomcat && kubec	rollout pause deployment myapp-deploy  更新镜像并且暂停更新  金丝雀发布
+kubectl rollout resume deployment myapp-deploy  开始更新
