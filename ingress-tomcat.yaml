@@ -1,0 +1,60 @@
+ingress-tomcat.yaml 
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-tomcat
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: tomcat.jasonhuang.com
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: tomcat
+          servicePort: 8080
+
+
+~
+vi ingress-tomcat.yaml 
+service的yaml deployment的yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat
+  namespace: default
+spec:
+  selector:
+    app: tomcat
+    release: canary
+  ports:
+  - name: http
+    targetPort: 8080
+    port: 8080
+  - name: ajp
+    targetPort: 8009
+    port: 8009
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deploy
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tomcat
+      release: canary
+  template:
+    metadata:
+      labels:
+        app: tomcat
+        release: canary
+    spec:
+      containers:
+      - name: tomcat
+        image: tomcat:8.5.32-jre8-alpine
