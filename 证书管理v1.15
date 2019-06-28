@@ -1,0 +1,30 @@
+证书可以手动续订
+[root@master kubernetes]# kubeadm alpha certs renew etcd-server
+certificate for serving etcd renewed
+[root@master kubernetes]# kubeadm alpha certs check-expiration
+CERTIFICATE                EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED
+admin.conf                 Jun 27, 2020 06:02 UTC   364d            no      
+apiserver                  Jun 27, 2020 06:02 UTC   364d            no      
+apiserver-etcd-client      Jun 27, 2020 06:02 UTC   364d            no      
+apiserver-kubelet-client   Jun 27, 2020 06:02 UTC   364d            no      
+controller-manager.conf    Jun 27, 2020 06:02 UTC   364d            no      
+etcd-healthcheck-client    Jun 27, 2020 06:24 UTC   364d            no      
+etcd-peer                  Jun 27, 2020 06:44 UTC   364d            no      
+etcd-server                Jun 27, 2020 06:45 UTC   364d            no      
+front-proxy-client         Jun 27, 2020 06:02 UTC   364d            no      
+scheduler.conf             Jun 27, 2020 06:02 UTC   364d            no      
+[root@master kubernetes]# 
+
+sudo kubeadm upgrade plan
+
+kubeadm config images pull --config=kubeadm-config.yaml
+
+重启kubelet
+systemctl daemon-reload
+systemctl restart kubelet
+所有节点升级后都需要重启kubelet
+
+升级其它master节点，如果有
+kubeadm upgrade node control-plane
+升级工作节点
+kubeadm upgrade node
