@@ -1,4 +1,4 @@
-
+this is a test
 ingress  controller 通过和kubernetes api交互，动态感知ingress规则的变化
 然后读取它，按照自定义的规则，规则就是写明了哪个域名对应哪个service,生成一段nginx配置，
 再写到nginx-ingress-control的pod里，这个Ingress controller的pod里运行着一个Nginx服务，控制器会把生成的nginx配置写入/etc/nginx.conf
